@@ -6,6 +6,7 @@ import com.epam.training.ticketservice.core.account.persistence.AccountRepositor
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Optional;
 
 @Service
@@ -14,6 +15,14 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
     private AccountDto signedInAccount = null;
+
+    @PostConstruct
+    public void init() {
+        if (accountRepository.findByUsername("admin").isEmpty()) {
+            Account admin = new Account("admin", "admin", Account.Role.ADMIN);
+            accountRepository.save(admin);
+        }
+    }
 
     @Override
     public Optional<AccountDto> signIn(String username, String password) {
