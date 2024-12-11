@@ -14,6 +14,4 @@ public interface AccountService {
     Optional<AccountDto> describe();
 
     void signUp(String username, String password);
-
-    void createAdminAccount();
 }

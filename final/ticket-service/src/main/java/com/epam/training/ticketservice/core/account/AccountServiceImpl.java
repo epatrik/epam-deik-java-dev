@@ -27,7 +27,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Optional<AccountDto> signInPrivileged(String username, String password) {
-        createAdminAccount();
         Optional<Account> account = accountRepository.findByUsernameAndPassword(username, password);
         if (account.isEmpty() || account.get().getRole() == Account.Role.USER) {
             return Optional.empty();
@@ -52,13 +51,5 @@ public class AccountServiceImpl implements AccountService {
     public void signUp(String username, String password) {
         Account account = new Account(username, password, Account.Role.USER);
         accountRepository.save(account);
-    }
-
-    @Override
-    public void createAdminAccount() {
-        if (accountRepository.findByUsername("admin").isEmpty()) {
-            Account account = new Account("admin", "admin", Account.Role.ADMIN);
-            accountRepository.save(account);
-        }
     }
 }
