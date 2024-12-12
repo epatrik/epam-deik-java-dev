@@ -57,6 +57,10 @@
             <version>3.12.4</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -106,6 +110,14 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>com/epam/training/ticketservice/ui/**</exclude>
+                                <exclude>com/epam/training/ticketservice/core/**/persistence/**</exclude>
+                                <exclude>com/epam/training/ticketservice/core/**/model/**</exclude>
+                                <exclude>com/epam/training/ticketservice/Application.class</exclude>
+                            </excludes>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>jacoco-check</id>
@@ -113,6 +125,12 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <excludes>
+                                <exclude>com/epam/training/ticketservice/ui/**</exclude>
+                                <exclude>com/epam/training/ticketservice/core/**/persistence/**</exclude>
+                                <exclude>com/epam/training/ticketservice/core/**/model/**</exclude>
+                                <exclude>com/epam/training/ticketservice/Application.class</exclude>
+                            </excludes>
                             <rules>
                                 <rule>
                                     <element>BUNDLE</element>

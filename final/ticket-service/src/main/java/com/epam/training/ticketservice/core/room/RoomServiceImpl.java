@@ -48,4 +48,10 @@ public class RoomServiceImpl implements RoomService {
                 .map(room -> new RoomDto(room.getRoomName(), room.getSeatRowNumber(), room.getSeatColNumber()))
                 .collect(Collectors.toList()));
     }
+
+    @Override
+    public Optional<RoomDto> findByRoomName(String roomName) {
+        return roomRepository.findByRoomName(roomName)
+                .map(room -> new RoomDto(room.getRoomName(), room.getSeatRowNumber(), room.getSeatColNumber()));
+    }
 }

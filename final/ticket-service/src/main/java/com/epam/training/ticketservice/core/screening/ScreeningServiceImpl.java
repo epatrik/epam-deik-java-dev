@@ -1,7 +1,11 @@
 package com.epam.training.ticketservice.core.screening;
 
+import com.epam.training.ticketservice.core.movie.MovieService;
+import com.epam.training.ticketservice.core.movie.model.MovieDto;
 import com.epam.training.ticketservice.core.movie.persistence.Movie;
 import com.epam.training.ticketservice.core.movie.persistence.MovieRepository;
+import com.epam.training.ticketservice.core.room.RoomService;
+import com.epam.training.ticketservice.core.room.model.RoomDto;
 import com.epam.training.ticketservice.core.room.persistence.Room;
 import com.epam.training.ticketservice.core.room.persistence.RoomRepository;
 import com.epam.training.ticketservice.core.screening.model.ScreeningDto;
@@ -20,21 +24,21 @@ import java.util.stream.Collectors;
 public class ScreeningServiceImpl implements ScreeningService {
 
     private final ScreeningRepository screeningRepository;
-    private final MovieRepository movieRepository;
-    private final RoomRepository roomRepository;
+    private final MovieService movieRepository;
+    private final RoomService roomRepository;
 
     public String createScreening(String movieTitle, String roomName, LocalDateTime startTime) {
-        Optional<Movie> movie = movieRepository.findByTitle(movieTitle);
-        Optional<Room> room = roomRepository.findByRoomName(roomName);
+        Optional<MovieDto> movie = movieRepository.getMovieByTitle(movieTitle);
+        Optional<RoomDto> room = roomRepository.findByRoomName(roomName);
 
         if (movie.isPresent() && room.isPresent()) {
-            LocalDateTime endTime = startTime.plusMinutes(movie.get().getLength());
+            LocalDateTime endTime = startTime.plusMinutes(movie.get().length());
 
             List<Screening> screenings = screeningRepository.findAllByRoomName(roomName);
             for (Screening screening : screenings) {
                 LocalDateTime screeningStart = screening.getStartTime();
-                LocalDateTime screeningEnd = screeningStart.plusMinutes(movieRepository.findByTitle(
-                        screening.getMovieTitle()).get().getLength());
+                LocalDateTime screeningEnd = screeningStart.plusMinutes(movieRepository.getMovieByTitle(
+                        screening.getMovieTitle()).get().length());
                 LocalDateTime breakStart = screeningStart.minusMinutes(10);
                 LocalDateTime breakEnd = screeningEnd.plusMinutes(10);
 
