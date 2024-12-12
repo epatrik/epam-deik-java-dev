@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MovieServiceImpl implements MovieService{
+public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
 
@@ -47,5 +47,11 @@ public class MovieServiceImpl implements MovieService{
         return Optional.of(movies.stream()
                 .map(movie -> new MovieDto(movie.getTitle(), movie.getGenre(), movie.getLength()))
                 .collect(Collectors.toList()));
+    }
+
+    @Override
+    public Optional<MovieDto> getMovieByTitle(String title) {
+        return movieRepository.findByTitle(title)
+                .map(movie -> new MovieDto(movie.getTitle(), movie.getGenre(), movie.getLength()));
     }
 }
