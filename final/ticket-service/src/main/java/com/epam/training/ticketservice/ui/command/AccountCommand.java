@@ -38,16 +38,14 @@ public class AccountCommand {
             if (accountService.describe().get().role() == Account.Role.ADMIN) {
                 return accountService.describe()
                         .map(accountDto -> "Signed in with privileged account '" + accountDto.username() + "'")
-                        .orElse("You need to login first!");
-            }
-            else {
+                        .orElse("You are not signed in");
+            } else {
                 return accountService.describe()
                         .map(accountDto -> "Signed in with account '" + accountDto.username() + "'")
-                        .orElse("You need to login first!");
+                        .orElse("You are not signed in");
             }
-        }
-        else {
-            return "You need to login first!";
+        } else {
+            return "You are not signed in";
         }
 
     }

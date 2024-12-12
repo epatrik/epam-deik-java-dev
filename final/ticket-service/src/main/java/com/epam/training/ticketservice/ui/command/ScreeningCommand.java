@@ -4,8 +4,6 @@ import com.epam.training.ticketservice.core.account.AccountService;
 import com.epam.training.ticketservice.core.account.model.AccountDto;
 import com.epam.training.ticketservice.core.account.persistence.Account;
 import com.epam.training.ticketservice.core.movie.MovieService;
-import com.epam.training.ticketservice.core.movie.model.MovieDto;
-import com.epam.training.ticketservice.core.room.model.RoomDto;
 import com.epam.training.ticketservice.core.screening.ScreeningService;
 import com.epam.training.ticketservice.core.screening.model.ScreeningDto;
 import lombok.AllArgsConstructor;
@@ -58,9 +56,11 @@ public class ScreeningCommand {
         }
         return screenings.stream()
                 .map(screeningDto -> String.format("%s (%s, %d minutes), screened in room %s, at %s",
-                        screeningDto.movieTitle(), movieService.getMovieByTitle(screeningDto.movieTitle()).get().genre(),
+                        screeningDto.movieTitle(),
+                        movieService.getMovieByTitle(screeningDto.movieTitle()).get().genre(),
                         movieService.getMovieByTitle(screeningDto.movieTitle()).get().length(),
-                        screeningDto.roomName(), screeningDto.startDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))))
+                        screeningDto.roomName(),
+                        screeningDto.startDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))))
                 .collect(java.util.stream.Collectors.joining("\n"));
     }
 

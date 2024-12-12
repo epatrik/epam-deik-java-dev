@@ -27,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Optional<AccountDto> signIn(String username, String password) {
         Optional<Account> account = accountRepository.findByUsernameAndPassword(username, password);
-        if (account.isEmpty() || account.get().getRole() == Account.Role.ADMIN){
+        if (account.isEmpty() || account.get().getRole() == Account.Role.ADMIN) {
             return Optional.empty();
         }
         signedInAccount = new AccountDto(account.get().getUsername(), account.get().getRole());

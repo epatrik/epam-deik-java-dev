@@ -5,7 +5,6 @@ import com.epam.training.ticketservice.core.account.model.AccountDto;
 import com.epam.training.ticketservice.core.account.persistence.Account;
 import com.epam.training.ticketservice.core.movie.MovieService;
 import com.epam.training.ticketservice.core.movie.model.MovieDto;
-import com.epam.training.ticketservice.core.movie.persistence.Movie;
 import lombok.AllArgsConstructor;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;

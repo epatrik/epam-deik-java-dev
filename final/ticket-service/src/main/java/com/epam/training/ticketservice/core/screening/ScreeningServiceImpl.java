@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class ScreeningServiceImpl implements ScreeningService{
+public class ScreeningServiceImpl implements ScreeningService {
 
     private final ScreeningRepository screeningRepository;
     private final MovieRepository movieRepository;
@@ -33,16 +33,17 @@ public class ScreeningServiceImpl implements ScreeningService{
             List<Screening> screenings = screeningRepository.findAllByRoomName(roomName);
             for (Screening screening : screenings) {
                 LocalDateTime screeningStart = screening.getStartTime();
-                LocalDateTime screeningEnd = screeningStart.plusMinutes(movieRepository.findByTitle(screening.getMovieTitle()).get().getLength());
+                LocalDateTime screeningEnd = screeningStart.plusMinutes(movieRepository.findByTitle(
+                        screening.getMovieTitle()).get().getLength());
                 LocalDateTime breakStart = screeningStart.minusMinutes(10);
                 LocalDateTime breakEnd = screeningEnd.plusMinutes(10);
 
-                if ((startTime.isAfter(screeningStart) && startTime.isBefore(screeningEnd)) ||
-                        (endTime.isAfter(screeningStart) && endTime.isBefore(screeningEnd))) {
+                if ((startTime.isAfter(screeningStart) && startTime.isBefore(screeningEnd))
+                        || (endTime.isAfter(screeningStart) && endTime.isBefore(screeningEnd))) {
                     return "There is an overlapping screening";
                 }
-                if (startTime.isAfter(screeningEnd) && startTime.isBefore(breakEnd) ||
-                        endTime.isAfter(breakStart) && endTime.isBefore(screeningStart)) {
+                if (startTime.isAfter(screeningEnd) && startTime.isBefore(breakEnd)
+                        || endTime.isAfter(breakStart) && endTime.isBefore(screeningStart)) {
                     return "This would start in the break period after another screening in this room";
                 }
             }
@@ -50,14 +51,14 @@ public class ScreeningServiceImpl implements ScreeningService{
             Screening newScreening = new Screening(movieTitle, roomName, startTime);
             screeningRepository.save(newScreening);
             return "Screening created";
-        }
-        else {
+        } else {
             return "Movie or room not found";
         }
     }
 
     public void deleteScreening(String movieTitle, String roomName, LocalDateTime startTime) {
-        Optional<Screening> screening = screeningRepository.findByMovieTitleAndRoomNameAndStartTime(movieTitle, roomName, startTime);
+        Optional<Screening> screening = screeningRepository.findByMovieTitleAndRoomNameAndStartTime(
+                movieTitle, roomName, startTime);
         screening.ifPresent(screeningRepository::delete);
     }
 
@@ -67,7 +68,8 @@ public class ScreeningServiceImpl implements ScreeningService{
             return Optional.empty();
         }
         return Optional.of(screenings.stream()
-                .map(screening -> new ScreeningDto(screening.getMovieTitle(), screening.getRoomName(), screening.getStartTime()))
+                .map(screening -> new ScreeningDto(screening.getMovieTitle(), screening.getRoomName(),
+                        screening.getStartTime()))
                 .collect(Collectors.toList()));
     }
 }

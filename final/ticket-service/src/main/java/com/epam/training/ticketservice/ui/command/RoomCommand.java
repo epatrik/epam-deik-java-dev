@@ -3,7 +3,6 @@ package com.epam.training.ticketservice.ui.command;
 import com.epam.training.ticketservice.core.account.AccountService;
 import com.epam.training.ticketservice.core.account.model.AccountDto;
 import com.epam.training.ticketservice.core.account.persistence.Account;
-import com.epam.training.ticketservice.core.movie.model.MovieDto;
 import com.epam.training.ticketservice.core.room.RoomService;
 import com.epam.training.ticketservice.core.room.model.RoomDto;
 import lombok.AllArgsConstructor;
